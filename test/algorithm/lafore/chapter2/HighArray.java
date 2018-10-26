@@ -60,7 +60,7 @@ class HighArray {
     }
 
     //-----------------------------------------------------------
-    // Programing project 2.1
+    // Programming project 2.1
     public long getMax() {
         if (nElems == 0) return -1;
         long max = a[0];
@@ -74,7 +74,7 @@ class HighArray {
     }
 
     //-----------------------------------------------------------
-    // Programing project 2.2
+    // Programming project 2.2
     public long removeMax() {
         if (nElems == 0) return -1;
         long max = a[0];
