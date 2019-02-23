@@ -54,9 +54,16 @@ class HighArray {
     //-----------------------------------------------------------
     public void display()             // displays array contents
     {
-        for (int j = 0; j < nElems; j++)       // for each element,
-            System.out.print(a[j] + " ");  // display it
-        System.out.println("");
+        System.out.println(getContent());
+    }
+
+    public String getContent() {
+        StringBuilder sb = new StringBuilder();
+        for (int j = 0; j < nElems; j++) {      // for each element,
+            sb.append(a[j])
+                    .append(" ");
+        }
+        return sb.toString();
     }
 
     //-----------------------------------------------------------
@@ -87,7 +94,7 @@ class HighArray {
             }
         }
         //shift elements to fill the removed element
-        for (int j = maxPosition; j < nElems; j++) {
+        for (int j = maxPosition; j < nElems - 1; j++) {
             a[j] = a[j + 1];
         }
         nElems--;
@@ -98,26 +105,16 @@ class HighArray {
     //-----------------------------------------------------------
     // Programming project 2.6
     public void noDups() {
-        long[] result = new long[nElems];
-        result[0] = a[0];
+        int dupCount = 0;
         for (int i = 0; i < nElems; i++) {
             for (int j = i + 1; j < nElems; j++) {
-                if (a[i] == a[j]) {
-                    result[j] = a[0]; // it's a duplicate!
-                } else {
-                    result[j] = a[j];
+                if (a[i] == a[j] && a[j] != a[0]) {
+                    a[j] = a[0];
+                    dupCount++;
                 }
             }
         }
-        int dupCount = 0;
-        for (int i = 1; i < nElems; i++) {
-            if (result[i] == result[0]) {
-                result[i] = result[i+1];
-                dupCount++;
-            }
-        }
         nElems = nElems - dupCount;
-        a = result;
     }
 
     //-----------------------------------------------------------
@@ -153,31 +150,6 @@ class HighArrayApp {
         arr.delete(55);
         arr.delete(99);
 
-        arr.display();                // display items again
-
-        System.out.println("Max num is " + arr.getMax());
-        System.out.println("Removed max num is " + arr.removeMax());
-        arr.display();                // display items again
-
-        // Programming project 2.3
-        long[] sortedByDesc = new long[maxSize];
-
-        int pos = 0;
-        long elem = arr.removeMax();
-        while (elem != -1) {
-            sortedByDesc[pos++] = elem;
-            elem = arr.removeMax();
-        }
-        System.out.println("sorted By Desc array ");
-        for (int j = 0; j < pos; j++)       // for each element,
-            System.out.print(sortedByDesc[j] + " ");  // display it
-        System.out.println("");
-
-
-        // No dups
-        System.out.println("No duplicate example");
-        arr.insert(11); arr.insert(22); arr.insert(22); arr.insert(33);
-        arr.noDups();
         arr.display();                // display items again
     }  // end main()
 }  // end class HighArrayApp

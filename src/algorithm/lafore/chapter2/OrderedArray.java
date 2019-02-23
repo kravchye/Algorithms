@@ -54,6 +54,50 @@ class OrdArray {
         a[j] = value;                  // insert it
         nElems++;                      // increment size
     }  // end insert()
+    //-----------------------------------------------------------
+    // Programming project 2.4
+    public void insertViaBinarySearch(long value)
+    {
+        int cur = binarySearch(value);
+        for (int k = nElems; k > cur; k--){
+            a[k] = a[k-1];
+        }
+        a[cur] = value;
+        nElems++;
+    }
+
+    public void deleteViaBinarySearch(long value) {
+        int pos = binarySearch(value);
+        if (pos == nElems) return;
+        for (int i = pos; i < nElems; i++) {
+            a[i] = a[i+1];
+        }
+        nElems--;
+
+    }
+    /**
+     * 
+     * @param value
+     * @retur the position of the value
+     */
+    private int binarySearch(long value) {
+        int lowerBound = 0;
+        int upperBound  = nElems - 1;
+        int cur = lowerBound;
+        while(true) {
+            if (lowerBound > upperBound){
+                break;
+            }
+            cur = (lowerBound + upperBound) / 2;
+            if (value > a[cur]) {
+                lowerBound = ++cur;
+            } else {
+                upperBound = cur - 1;
+            }
+        }
+        return cur;
+    }
+
 
     //-----------------------------------------------------------
     public boolean delete(long value) {
@@ -72,11 +116,17 @@ class OrdArray {
     //-----------------------------------------------------------
     public void display()             // displays array contents
     {
-        for (int j = 0; j < nElems; j++)       // for each element,
-            System.out.print(a[j] + " ");  // display it
-        System.out.println("");
+        System.out.println(getContent());
     }
 
+    public String getContent() {
+        StringBuilder sb = new StringBuilder();
+        for (int j = 0; j < nElems; j++) {      // for each element,
+            sb.append(a[j])
+                    .append(" ");
+        }
+        return sb.toString();
+    }
     //-----------------------------------------------------------
     // Programming project 2.5
     public void merge(long[] arr) {
@@ -135,13 +185,6 @@ class OrderedApp {
         arr.delete(99);
 
         arr.display();                 // display items again
-
-        // merge sort
-        arr.merge(new long[]{22, 99});
-        arr.display();
-
-        arr.merge(new long[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13});
-        arr.display();
 
     }  // end main()
 }  // end class OrderedApp
