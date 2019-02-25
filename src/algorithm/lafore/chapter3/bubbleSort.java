@@ -1,33 +1,14 @@
 package algorithm.lafore.chapter3;
 
+import algorithm.lafore.chapter2.BaseArray;
+
 // bubbleSortInTwoWays.java
 // demonstrates bubble sort
 // to run this program: C>java BubbleSortApp
 ////////////////////////////////////////////////////////////////
-class ArrayBub {
-    private long[] a;                 // ref to array a
-    private int nElems;               // number of data items
-
-    //--------------------------------------------------------------
-    public ArrayBub(int max)          // constructor
-    {
-        a = new long[max];                 // create the array
-        nElems = 0;                        // no items yet
-    }
-
-    //--------------------------------------------------------------
-    public void insert(long value)    // put element into array
-    {
-        a[nElems] = value;             // insert it
-        nElems++;                      // increment size
-    }
-
-    //--------------------------------------------------------------
-    public void display()             // displays array contents
-    {
-        for (int j = 0; j < nElems; j++)       // for each element,
-            System.out.print(a[j] + " ");  // display it
-        System.out.println("");
+class ArrayBub extends BaseArray {
+    public ArrayBub(int max) {
+        super(max);
     }
 
     //--------------------------------------------------------------
@@ -64,28 +45,27 @@ class ArrayBub {
      */
     // Programming project 3.4
     public void bubbleSortOddEvenLoops() {
-        int out, odd, even;
-
-        for (out = nElems - 1; out > 1; out--) {
-            for (even = 0; even < out; even = even+2) {
-                if (a[even] > a[even + 1])
-                    swap(even, even + 1);
-                if (even + 2 > nElems) break;
-            }
-            for (odd = 1;odd < out; odd = odd + 2) {
-                if (a[odd] > a[odd + 1])
-                    swap(odd, odd + 1);
-                if (odd + 2 > nElems) break;
+        boolean wasSwap;
+        do {
+            wasSwap=false;
+            for(int in=1; in<nElems-1; in+=2) {
+                if( a[in] > a[in+1] ) {
+                    swap(in, in+1);
+                    wasSwap=true;
+                }
             }
 
-        }
+            for(int in=0; in<nElems-1; in+=2) {
+                if( a[in] > a[in+1] ) {
+                    swap(in, in+1);
+                    wasSwap=true;
+                }
+            }
+
+        } while (wasSwap);
+
     }
-    //--------------------------------------------------------------
-    private void swap(int one, int two) {
-        long temp = a[one];
-        a[one] = a[two];
-        a[two] = temp;
-    }
+
 //--------------------------------------------------------------
 }  // end class ArrayBub
 

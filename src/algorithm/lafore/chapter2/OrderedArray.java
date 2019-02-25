@@ -4,20 +4,9 @@ package algorithm.lafore.chapter2;
 // demonstrates ordered array class
 // to run this program: C>java OrderedApp
 ////////////////////////////////////////////////////////////////
-class OrdArray {
-    private long[] a;                 // ref to array a
-    private int nElems;               // number of data items
-
-    //-----------------------------------------------------------
-    public OrdArray(int max)          // constructor
-    {
-        a = new long[max];             // create array
-        nElems = 0;
-    }
-
-    //-----------------------------------------------------------
-    public int size() {
-        return nElems;
+class OrdArray extends BaseArray {
+    public OrdArray(int max) {
+        super(max);
     }
 
     //-----------------------------------------------------------
@@ -97,37 +86,7 @@ class OrdArray {
         }
         return cur;
     }
-
-
-    //-----------------------------------------------------------
-    public boolean delete(long value) {
-        int j = find(value);
-        if (j == nElems)                  // can't find it
-            return false;
-        else                           // found it
-        {
-            for (int k = j; k < nElems; k++) // move bigger ones down
-                a[k] = a[k + 1];
-            nElems--;                   // decrement size
-            return true;
-        }
-    }  // end delete()
-
-    //-----------------------------------------------------------
-    public void display()             // displays array contents
-    {
-        System.out.println(getContent());
-    }
-
-    public String getContent() {
-        StringBuilder sb = new StringBuilder();
-        for (int j = 0; j < nElems; j++) {      // for each element,
-            sb.append(a[j])
-                    .append(" ");
-        }
-        return sb.toString();
-    }
-    //-----------------------------------------------------------
+     //-----------------------------------------------------------
     // Programming project 2.5
     public void merge(long[] arr) {
         if (arr.length == 0 || arr == null || arr.length == 0) return;
@@ -173,7 +132,7 @@ class OrderedApp {
         arr.insert(33);
 
         int searchKey = 55;            // search for item
-        if (arr.find(searchKey) != arr.size())
+        if (arr.find(searchKey) != arr.nElems)
             System.out.println("Found " + searchKey);
         else
             System.out.println("Can't find " + searchKey);

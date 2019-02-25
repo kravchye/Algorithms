@@ -1,31 +1,14 @@
 package algorithm.lafore.chapter3;
 
+import algorithm.lafore.chapter2.BaseArray;
+
 // insertSort.java
 // demonstrates insertion sort
 // to run this program: C>java InsertSortApp
 //--------------------------------------------------------------
-class ArrayIns
-   {
-   private long[] a;                 // ref to array a
-   private int nElems;               // number of data items
-//--------------------------------------------------------------
-   public ArrayIns(int max)          // constructor
-      {
-      a = new long[max];                 // create the array
-      nElems = 0;                        // no items yet
-      }
-//--------------------------------------------------------------
-   public void insert(long value)    // put element into array
-      {
-      a[nElems] = value;             // insert it
-      nElems++;                      // increment size
-      }
-//--------------------------------------------------------------
-   public void display()             // displays array contents
-      {
-      for(int j=0; j<nElems; j++)       // for each element,
-         System.out.print(a[j] + " ");  // display it
-      System.out.println("");
+class ArrayIns extends BaseArray {
+      public ArrayIns(int max) {
+         super(max);
       }
 //--------------------------------------------------------------
    public void insertionSort()
@@ -35,23 +18,21 @@ class ArrayIns
       for(out=1; out<nElems; out++)     // out is dividing line
          {
          long temp = a[out];            // remove marked item
+         copies++;
          in = out;
-         comparision++; // comparison in while
             // start shifts at out
          while(in > 0 ) // until one is smaller,
             {
-               comparision++;
                if (a[in-1] <= temp) {
                   comparision++;
                   break;
-               } else {
-                  comparision++;
                }
             a[in] = a[in-1];            // shift item to right
             copies++;
             --in;                       // go left one position
             }
          a[in] = temp;                  // insert marked item
+         copies++;
          }  // end for
 
          // Programming project 3.5
@@ -61,8 +42,7 @@ class ArrayIns
 //--Programming project 3.6
 public void insertionSortNoDups()
 {
-   // TODO
-   int in, out;
+   int in, out, numDups=0 ;
    for(out=1; out<nElems; out++)     // out is dividing line
    {
 
@@ -72,19 +52,37 @@ public void insertionSortNoDups()
       // start shifts at out
       while(in > 0 && a[in-1] >= temp) // until one is smaller,
       {
+          if(a[in-1] == temp && temp > -1)
+          {
+              temp = -1;
+              numDups++;
+          }
          a[in] = a[in-1];            // shift item to right
          --in;
          // go left one position
       }
       a[in] = temp;                  // insert marked item
    }  // end for
+    for (int i = 0; i < nElems - numDups; i++) {
+        a[i] = a[i+numDups];
+    }
+    nElems -=numDups;
 }
 //--------------------------------------------------------------
 
 
    // Programming project 3.2
    public long median() {
-      return a[nElems / 2];
+         ArrayIns arr = new ArrayIns(nElems);
+         for (int i = 0; i < nElems; i++) {
+            arr.insert(a[i]);
+         }
+         arr.insertionSort();
+         if (arr.nElems % 2 == 0) { //if 2 median numbers
+             return (arr.a[nElems/2] + arr.a[nElems/2 + 1]) /2;// get average of 2
+         } else {
+             return arr.a[nElems/2];
+         }
    }
    //--------------------------------------------------------------
    // Programming project 3.3

@@ -1,33 +1,17 @@
 package algorithm.lafore.chapter3;
 
+import algorithm.lafore.chapter2.BaseArray;
+
 // selectSort.java
 // demonstrates selection sort
 // to run this program: C>java SelectSortApp
 ////////////////////////////////////////////////////////////////
-class ArraySel
-   {
-   private long[] a;                 // ref to array a
-   private int nElems;               // number of data items
-//--------------------------------------------------------------
-   public ArraySel(int max)          // constructor
-      {
-      a = new long[max];                 // create the array
-      nElems = 0;                        // no items yet
-      }
-//--------------------------------------------------------------
-   public void insert(long value)    // put element into array
-      {
-      a[nElems] = value;             // insert it
-      nElems++;                      // increment size
-      }
-//--------------------------------------------------------------
-   public void display()             // displays array contents
-      {
-      for(int j=0; j<nElems; j++)       // for each element,
-         System.out.print(a[j] + " ");  // display it
-      System.out.println("");
-      }
-//--------------------------------------------------------------
+class ArraySel extends BaseArray {
+   public ArraySel(int max) {
+      super(max);
+   }
+
+   //--------------------------------------------------------------
    public void selectionSort()
       {
       int out, in, min;
@@ -41,13 +25,7 @@ class ArraySel
          swap(out, min);                // swap them
          }  // end for(out)
       }  // end selectionSort()
-//--------------------------------------------------------------
-   private void swap(int one, int two)
-      {
-      long temp = a[one];
-      a[one] = a[two];
-      a[two] = temp;
-      }
+
 //--------------------------------------------------------------
    }  // end class ArraySel
 ////////////////////////////////////////////////////////////////
