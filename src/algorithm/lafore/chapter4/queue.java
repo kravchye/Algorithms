@@ -6,11 +6,11 @@ package algorithm.lafore.chapter4;
 ////////////////////////////////////////////////////////////////
 class Queue
    {
-   private int maxSize;
-   private long[] queArray;
-   private int front;
-   private int rear;
-   private int nItems;
+   protected int maxSize;
+   protected long[] queArray;
+   protected int front;
+   protected int rear;
+   protected int nItems;
 //--------------------------------------------------------------
    public Queue(int s)          // constructor
       {
@@ -57,6 +57,19 @@ class Queue
       {
       return nItems;
       }
+   // Programming project 4.1
+   public String display() {
+       int numElem = maxSize;
+       int frontPos = front;
+       StringBuilder sb = new StringBuilder();
+       while (numElem != 0) {
+           if (frontPos == maxSize) frontPos = 0;
+           sb.append(queArray[frontPos++]).append(" ");
+           numElem--;
+       }
+       System.out.println(sb.toString());
+       return sb.toString();
+   }
 //--------------------------------------------------------------
    }  // end class Queue
 
