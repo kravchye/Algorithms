@@ -27,11 +27,17 @@ public class Deque extends Queue {
     public long removeRight() {
         long removed = queArray[rear--];
         if (rear == -1) {
-            rear = maxSize;
+            rear = maxSize - 1;
         }
         nItems--;
         return removed;
     }
+
+    public long getTopRight() {
+        return queArray[rear];
+    }
+
+
     private void restrictNumEl() {
         if (nItems > maxSize)
             nItems = maxSize;

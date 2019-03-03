@@ -26,6 +26,7 @@ class Queue
       if(rear == maxSize-1)         // deal with wraparound
          rear = -1;
       queArray[++rear] = j;         // increment rear and insert
+      if (nItems < maxSize)
       nItems++;                     // one more item
       }
 //--------------------------------------------------------------
@@ -59,10 +60,10 @@ class Queue
       }
    // Programming project 4.1
    public String display() {
-       int numElem = maxSize;
+       int numElem = nItems;
        int frontPos = front;
        StringBuilder sb = new StringBuilder();
-       while (numElem != 0) {
+       while (numElem > 0) {
            if (frontPos == maxSize) frontPos = 0;
            sb.append(queArray[frontPos++]).append(" ");
            numElem--;
