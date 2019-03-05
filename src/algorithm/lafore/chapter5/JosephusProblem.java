@@ -1,5 +1,5 @@
 package algorithm.lafore.chapter5;
-// Programing project 5.5
+// Programming project 5.5
 public class JosephusProblem {
     private CircularList circularList;
 

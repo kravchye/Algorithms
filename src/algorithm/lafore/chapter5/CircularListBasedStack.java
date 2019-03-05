@@ -1,6 +1,6 @@
 package algorithm.lafore.chapter5;
 
-// Programing project 5.4
+// Programming project 5.4
 public class CircularListBasedStack {
     private CircularList list;
 

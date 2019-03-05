@@ -156,7 +156,7 @@ class DoublyLinkDedList
 // -------------------------------------------------------------
    }  // end class DoublyLinkDedList
 
-// Programing project 5.2
+// Programming project 5.2
 class Dequeue {
    LinkD first;
    LinkD last;

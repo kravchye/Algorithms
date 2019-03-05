@@ -1,5 +1,5 @@
 package algorithm.lafore.chapter5;
-// Programing project 5.3
+// Programming project 5.3
 public class CircularList {
     private LinkD current;
 
