@@ -60,16 +60,17 @@ class HighArray extends BaseArray {
     //-----------------------------------------------------------
     // Programming project 2.6
     public void noDups() {
-        int dupCount = 0;
         for (int i = 0; i < nElems; i++) {
             for (int j = i + 1; j < nElems; j++) {
-                if (a[i] == a[j] && a[j] != a[0]) {
-                    a[j] = a[0];
-                    dupCount++;
+                if (a[i] == a[j]) {
+                    for (int k = j; k < nElems - 1; k++) {
+                        a[k] = a[k+1];
+                    }
+                    j--;
+                    nElems--;
                 }
             }
         }
-        nElems = nElems - dupCount;
     }
 
     //-----------------------------------------------------------
