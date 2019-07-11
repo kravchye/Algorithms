@@ -75,4 +75,17 @@ public class HighArrayTest {
         Assert.assertEquals("11 22 33 44 ", arr.getContent());
 
     }
+    @Test
+    // Programing project 2.6 - Test #3
+    public void testNoDups2() {
+        arr = new HighArray(arrSize); // create the array
+        arr.insert(11);
+        arr.insert(11);
+        arr.insert(11);
+
+        Assert.assertEquals("11 11 11 ", arr.getContent());
+        arr.noDups();
+        Assert.assertEquals("11 ", arr.getContent());
+
+    }
 }
