@@ -1,0 +1,927 @@
+Index: src/amazon/Task1.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/amazon/Task1.java	(revision e00031cd1218b6c4d9d6b45124df6ae553fe0671)
++++ src/amazon/Task1.java	(revision e00031cd1218b6c4d9d6b45124df6ae553fe0671)
+@@ -0,0 +1,26 @@
++package amazon;
++
++import java.util.List;
++
++public class Task1 {
++
++    public List<List<Integer>> flightRoutes(int maxLength, List<List<Integer>> forwardRoutes, List<List<Integer>> backwardRoutes) {
++        return null;
++    }
++
++    public static void main(String[] args) {
++
++    }
++}
++//    Map<Integer, Integer> forwardRouteMap = new HashMap<Integer, Integer>();
++//    Map<Integer, Integer> returnRouteMap = new HashMap<Integer, Integer>();
++//    // populate maps
++//         for (List<Integer> forwardRoute: forwardRouteList) {
++//        forwardRouteMap.put(forwardRoute.get(0), forwardRoute.get(1));
++//    }
++//         for (List<Integer> returnRoute: returnRouteList) {
++//        returnRouteMap.put(returnRoute.get(0), returnRoute.get(1));
++//    }
++//    List<List<Integer>> forwardToReturnIdList = new ArrayList<List<Integer>>();
++//         for (Map.Entry<String, String> fEntry : forwardRouteMap.entrySet()) {
++
+Index: src/amazon/WordDictionary.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/amazon/WordDictionary.java	(revision e00031cd1218b6c4d9d6b45124df6ae553fe0671)
++++ src/amazon/WordDictionary.java	(revision e00031cd1218b6c4d9d6b45124df6ae553fe0671)
+@@ -0,0 +1,28 @@
++
++package amazon;
++
++import java.util.HashSet;
++import java.util.Set;
++
++public class WordDictionary {
++    private static String[] dictionary = new String[]{"word", "list"};
++    private static String[] words = new String[]{"paris", "wordlist"};
++
++    public static void main(String[] args) {
++        Set<String> dictionarySet = Set.of(dictionary);
++        Set<String> result = new HashSet<>();
++        for (String word: words) {
++            for (int i = 0; i < word.length(); i++) {
++                String first = word.substring(0, i+1);
++                if (!dictionarySet.contains(first)) {
++                    continue;
++                }
++                String second = word.substring(i+1, word.length());
++                if (dictionarySet.contains(second)) {
++                    result.add(word);
++                }
++            }
++        }
++        result.forEach(System.out::println);
++    }
++}
+\ No newline at end of file
+Index: src/ibm/EnumSingleton.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/ibm/EnumSingleton.java	(revision e00031cd1218b6c4d9d6b45124df6ae553fe0671)
++++ src/ibm/EnumSingleton.java	(revision e00031cd1218b6c4d9d6b45124df6ae553fe0671)
+@@ -0,0 +1,18 @@
++package ibm;
++
++// This singleton is thread-safe
++// because the only one enum exists per VM
++public enum EnumSingleton {
++    ONE("One" , 1);
++    private String desc;
++    private int counter;
++
++    EnumSingleton(String description, int counter) {
++        this.desc = description;
++        this.counter = counter;
++    }
++
++    public EnumSingleton getInstance() {
++        return ONE;
++    }
++}
+Index: src/ibm/Singleton.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/ibm/Singleton.java	(revision e00031cd1218b6c4d9d6b45124df6ae553fe0671)
++++ src/ibm/Singleton.java	(revision e00031cd1218b6c4d9d6b45124df6ae553fe0671)
+@@ -0,0 +1,22 @@
++package ibm;
++// Double Checking locking singleton
++// Use volatile to make sure only one instance is created and
++// the rest threads are aware of the change
++
++// Use this implementation in case we need the additional initialization logic
++// Otherwise use EnumSingleton implementation as Joshua Bloch suggest which is thread safe on JVM level
++public class Singleton {
++    // guarantees that all accesses to it actually read its current value from memory.
++    private volatile static Singleton instance;
++    private Singleton() {}
++    public static Singleton getInstance() {
++        if (instance == null) {
++            synchronized (Singleton.class) {
++                if (instance == null) {
++                    instance = new Singleton();
++                }
++            }
++        }
++        return instance;
++    }
++}
+\ No newline at end of file
+Index: src/ibm/WordCounter.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/ibm/WordCounter.java	(revision e00031cd1218b6c4d9d6b45124df6ae553fe0671)
++++ src/ibm/WordCounter.java	(revision e00031cd1218b6c4d9d6b45124df6ae553fe0671)
+@@ -0,0 +1,17 @@
++package ibm;
++
++import org.json.JSONObject;
++
++import java.io.File;
++import java.io.IOException;
++
++public class WordCounter {
++    public static void main(String[] args) throws IOException {
++        if (args[0] == null) {
++            throw new RuntimeException("Please define file path");
++        }
++        WordUtilities wordUtils = new WordUtilities();
++        JSONObject wordCounter = wordUtils.getUniqueWordCountFrom(new File(args[0]));
++        wordUtils.printJSONObject(wordCounter);
++    }
++}
+Index: src/ibm/WordUtilities.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/ibm/WordUtilities.java	(revision e00031cd1218b6c4d9d6b45124df6ae553fe0671)
++++ src/ibm/WordUtilities.java	(revision e00031cd1218b6c4d9d6b45124df6ae553fe0671)
+@@ -0,0 +1,28 @@
++package ibm;
++
++import org.json.JSONObject;
++
++import java.io.File;
++import java.io.FileNotFoundException;
++import java.util.HashMap;
++import java.util.Map;
++import java.util.Scanner;
++
++public class WordUtilities {
++
++    public JSONObject getUniqueWordCountFrom(File inputfile) throws FileNotFoundException {
++        Scanner input = new Scanner(inputfile);
++
++        Map<String, Integer> wordCountMap = new HashMap<>();
++        while (input.hasNext()) {
++            String word  = input.next();
++            wordCountMap.put(word, wordCountMap.getOrDefault(word, 0) + 1);
++        }
++        return new JSONObject(wordCountMap);
++    }
++
++    public void printJSONObject(JSONObject json) {
++        System.out.println(json);
++    }
++
++}
+Index: src/interview/array/ArrayTask.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/interview/array/ArrayTask.java	(revision e00031cd1218b6c4d9d6b45124df6ae553fe0671)
++++ src/interview/array/ArrayTask.java	(revision e00031cd1218b6c4d9d6b45124df6ae553fe0671)
+@@ -0,0 +1,334 @@
++package interview.array;
++
++import java.util.HashMap;
++import java.util.HashSet;
++import java.util.Map;
++import java.util.Set;
++
++public class ArrayTask {
++    // Task 1
++    public boolean hasUniqueCharacters(String str) {
++        if (str == null) {
++            return false;
++        }
++        for (int i = 0; i < str.length(); i++) {
++            for (int j = 0; j < str.length(); j++) {
++                if (str.charAt(i) == str.charAt(j)) {
++                    return true;
++                }
++            }
++        }
++        return true;
++    }
++
++    public boolean hasUniqueCharacters2(String str) {
++        if (str == null) {
++            return false;
++        }
++        Set<Character> charSet = new HashSet<>(str.length());
++        for (char ch : str.toCharArray()) {
++            if (charSet.contains(ch)) {
++                return true;
++            } else {
++                charSet.add(ch);
++            }
++        }
++        return true;
++    }
++
++    public static boolean hasUniqueCharacters3(String str) {
++        boolean[] charset = new boolean[256];
++        for (int i = 0; i < str.length(); i++) {
++            int val = str.charAt(i);
++            if (charset[val] == true) {
++                return false;
++            } else {
++                charset[val] = true;
++            }
++        }
++        return true;
++    }
++
++    // Task 2 - Reverse string
++    public static String reverse(String str) {
++        int begin = 0;
++        int end = str.length() - 1;
++        char[] arr = str.toCharArray();
++        while (end > begin) {
++            char temp = arr[begin];
++            arr[begin] = arr[end];
++            arr[end] = temp;
++            end--;
++            begin++;
++        }
++        return new String(arr);
++    }
++
++    // Task 3
++    public static String removeDups(String str) {
++        if (str == null) return "";
++        char[] a = str.toCharArray();
++        int nElems = a.length;
++        if (nElems < 2) return str;
++        for (int i = 0; i < nElems; i++) {
++            for (int j = i + 1; j < nElems; j++) {
++                if (a[i] == a[j]) {
++                    for (int k = j; k < nElems - 1; k++) {
++                        a[k] = a[k + 1];
++                    }
++                    j--;
++                    nElems--;
++                }
++            }
++        }
++
++        return new String(a, 0, nElems);
++    }
++
++    // Task 4 - anagrams
++    public static boolean isAnagram(String first, String second) {
++        String positive = first.toLowerCase();
++        String negative = second.toLowerCase();
++
++        if (positive.length() != negative.length()) {
++            return false;
++        }
++        int diff = 0;
++        int counts[] = new int[26];
++        //  go through first array
++        for (int i = 0; i < positive.length(); i++) {
++            // get char id by String.charAt(ch) method
++            int cId = positive.charAt(i) - 97;
++            if (counts[cId] >= 0) {
++                // if already exist increment
++                counts[cId]++;
++                diff++;
++            } else {
++                // else decrement
++                counts[cId]--;
++                diff--;
++            }
++        }
++        for (int i = 0; i < negative.length(); i++) {
++            // get char id by String.charAt(ch) method
++            int cId = negative.charAt(i) - 97;
++            if (counts[cId] <= 0) {
++                // if already exist decrement
++                counts[cId]++;
++                diff++;
++            } else {
++                // else increment
++                counts[cId]--;
++                diff--;
++            }
++        }
++//        for (int counter : counts) {
++//            if (counter != 0) {
++//                return false;
++//            }
++//        }
++
++
++        // TODO Optimization can we do it in O(N) by in/de-crementing some variable
++
++        return diff == 0;
++    }
++
++    public static boolean isAnagram2(String first, String second) {
++        if ((first == null && second == null)
++                || first.length() != second.length()
++                || first.length() == 0) {
++            return false;
++        }
++        String fLowercase = first.toLowerCase();
++        String sLowercase = second.toLowerCase();
++
++        Map<Character, Integer> map = new HashMap<>(first.length() + second.length());
++        // a->2, e.g. the value is incremented twice
++        // b->-2, e.g. the value is decremented twice
++        for (char ch : fLowercase.toCharArray()) {
++            Integer num = map.get(ch);
++            map.put(ch, num != null ? ++num : 1);
++        }
++        for (char ch : sLowercase.toCharArray()) {
++            Integer num = map.get(ch);
++            map.put(ch, num != null ? --num : -1);
++        }
++        for (Map.Entry<Character, Integer> entries : map.entrySet()) {
++            if (entries.getValue() != 0) {
++                return false;
++            }
++        }
++        // return true if all entry values equal to 0
++        return true;
++    }
++
++    public static boolean isAnagram3(String first, String second) {
++        if ((first == null && second == null)
++                || first.length() != second.length()
++                || first.length() == 0) {
++            return false;
++        }
++        String fLowercase = first.toLowerCase();
++        String sLowercase = second.toLowerCase();
++        int[] arr = new int[26];
++        int diff = 0;
++        // if character present in the array increment diff
++        for (int i = 0; i < fLowercase.length(); i++) {
++            int num = fLowercase.charAt(i) - 97;
++            if (arr[num] >= 0) {
++                diff++;
++                arr[num]++;
++            } else {
++                diff--;
++                int value = arr[num];
++                arr[num] = ++value;
++            }
++        }
++        // otherwise decrement it
++
++        // for the second array do the opposite operation
++        for (int i = 0; i < sLowercase.length(); i++) {
++            int num = sLowercase.charAt(i) - 97;
++            if (arr[num] <= 0) {
++                diff++;
++                arr[num]++;
++            } else {
++                diff--;
++                int value = arr[num];
++                arr[num] = ++value;
++            }
++        }
++        return diff == 0;
++
++    }
++
++    private static char[] replaceSpaceInString(char[] str) {
++        int spaceCounter = 0;
++        int length = str.length;
++
++        //First lets calculate number of spaces
++        for (int i = 0; i < length; i++) {
++            if (str[i] == ' ')
++                spaceCounter++;
++        }
++
++        //calculate new size
++        int newLength = length + 2 * spaceCounter;
++
++        char[] newArray = new char[newLength + 1];
++        newArray[newLength] = '\0';
++
++
++        for (int i = 0, newArrayPosition = 0; i < length; i++) {
++            if (str[i] == ' ') {
++                newArray[newArrayPosition] = '%';
++                newArray[newArrayPosition + 1] = '2';
++                newArray[newArrayPosition + 2] = '0';
++                newArrayPosition = newArrayPosition + 3;
++            } else {
++                newArray[newArrayPosition] = str[i];
++                newArrayPosition++;
++            }
++        }
++        return newArray;
++    }
++
++    private static char[] replaceSpaceInString2(char[] str) {
++        if (str == null) return new char[]{};
++        // calculate spaces
++        int spaces = 0;
++        for (char ch : str) {
++            if (ch == ' ') spaces++;
++        }
++        // define new array = origArr.length + spaces
++        char[] newArr = new char[str.length + 2 * spaces];
++        int newArrayIdx = 0;
++        for (int i = 0; i < str.length; i++) {
++            if (str[i] == ' ') {
++                newArr[newArrayIdx++] = '%';
++                newArr[newArrayIdx++] = '2';
++                newArr[newArrayIdx++] = '0';
++            } else {
++                newArr[newArrayIdx++] = str[i];
++            }
++        }
++        return newArr;
++    }
++
++    private static int[][] rotateMatrix(int matrix[][], int n) {
++        int[][] rotatedMatrix = new int[n][n];
++        for (int r = 0; r < matrix.length; r++) {
++            for (int c = matrix[r].length - 1; c >= 0; c--) {
++                rotatedMatrix[r][n - c - 1] = matrix[c][r];
++            }
++        }
++        return rotatedMatrix;
++    }
++
++    static void displayMatrix(int mat[][], int N) {
++        for (int i = 0; i < N; i++) {
++            for (int j = 0; j < N; j++)
++                System.out.print(" " + mat[i][j]);
++
++            System.out.print("\n");
++        }
++        System.out.print("\n");
++    }
++
++    public static void setZeros(int[][] matrix) {
++       int row[] = new int[matrix.length];
++       int col[] = new int[matrix[0].length];
++       // mark 0 ro2 or columns
++       for (int i=0; i < matrix.length; i++) {
++           for (int j=0; j < matrix[i].length; j++) {
++               if (matrix[i][j] == 0) {
++                   row[i] = 1;
++                   col[j] = 1;
++               }
++           }
++       }
++        for (int i=0; i < matrix.length; i++) {
++            for (int j=0; j < matrix[i].length; j++) {
++                if (row[i] == 1 || col[j] == 1) {
++                    matrix[i][j] = 0;
++                }
++            }
++        }
++    }
++
++    public static boolean isRotated(String s1, String s2) {
++        if (s1 == null && s2 == null
++        || s1.length() == 0 || s2.length() == 0) {
++            return false;
++        }
++        String s3 = s1.concat(s2);
++        return s3.contains(s2);
++    }
++
++    public static void main(String[] args) {
++        // Task 1
++        System.out.println(hasUniqueCharacters3("abca"));
++        // Task 2
++        System.out.println(reverse("abcdef"));
++        // Task 3
++        System.out.println(removeDups("abcba"));
++        // Task 4
++        System.out.println(isAnagram("abcdeA", "edcaba"));
++        System.out.println(isAnagram2("abcdeA", "edcaba"));
++        System.out.println(isAnagram3("abcdeA", "edcaba"));
++        // Task 5
++        System.out.println(replaceSpaceInString("I am".toCharArray()));
++        System.out.println(replaceSpaceInString2("I am".toCharArray()));
++        // Task 6
++        int[][] matrix = new int[][]{{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
++        displayMatrix(rotateMatrix(matrix, 3), 3);
++
++        // Task 7
++        int[][] zeroMatrix = new int[][]{{0, 2, 3}, {4, 5, 6}, {7, 8, 9}};
++        setZeros(zeroMatrix);
++        displayMatrix(zeroMatrix, 3);
++        // Task 8
++        System.out.println(isRotated("abcde", "cdeab"));
++    }
++}
+Index: src/interview/hashmap/WarmingUp.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/interview/hashmap/WarmingUp.java	(revision e00031cd1218b6c4d9d6b45124df6ae553fe0671)
++++ src/interview/hashmap/WarmingUp.java	(revision e00031cd1218b6c4d9d6b45124df6ae553fe0671)
+@@ -0,0 +1,34 @@
++package interview.hashmap;
++
++import java.util.*;
++import java.util.stream.Collectors;
++
++public class WarmingUp {
++    private static Map<Integer, String> buildHashMap(List<List<Integer>> idToLengthLists) {
++        if (idToLengthLists == null) {
++            return Collections.emptyMap();
++        }
++        Map<Integer, String> map = new HashMap<>(idToLengthLists.size());
++        for (List<Integer> idToDistance: idToLengthLists) {
++            map.put(idToDistance.get(0), idToDistance.get(1).toString());
++        }
++        return map;
++    }
++
++    private static Map<Integer, String> buildHashMapViaStreamsTest(List<Integer> idToLengthLists) {
++        return idToLengthLists.stream()
++                .collect(Collectors.toMap(Integer::intValue, i -> i.toString()));
++    }
++
++    private static Map<Integer, String> buildHashMapViaStreams(List<List<Integer>> idToLengthLists) {
++        return idToLengthLists.stream()
++                .flatMap(x -> x.stream())
++                .collect(Collectors.toMap(Integer::intValue, i -> i.toString()));
++    }
++    public static void main(String[] args) {
++        List<Integer> flightIdToDistance = Arrays.asList(1, 650);
++        List<List<Integer>> idToLengthLists = new ArrayList<>();
++        idToLengthLists.add(flightIdToDistance);
++        System.out.println(buildHashMap(idToLengthLists));
++    }
++}
+Index: src/interview/linkedlist/CrackingInterviewQuestions.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/interview/linkedlist/CrackingInterviewQuestions.java	(revision e00031cd1218b6c4d9d6b45124df6ae553fe0671)
++++ src/interview/linkedlist/CrackingInterviewQuestions.java	(revision e00031cd1218b6c4d9d6b45124df6ae553fe0671)
+@@ -0,0 +1,229 @@
++package interview.linkedlist;
++
++import java.util.HashSet;
++import java.util.Set;
++
++public class CrackingInterviewQuestions {
++
++    static class Node<T>
++    {
++        @Override
++        public String toString() {
++            return String.valueOf(dData);
++        }
++
++        T dData;
++         Node next;
++           // -------------------------------------------------------------
++        Node(T d)
++        { dData = d; }
++        // -------------------------------------------------------------
++        void display() {
++            System.out.print(dData + " ");
++            Node nextOne = next;
++            while(nextOne != null) {
++                System.out.print(nextOne.dData + " ");
++                nextOne = nextOne.next;
++            }
++            System.out.println();
++        }
++        void appendToTail(T d) {
++            Node newOne = new Node(d);
++            if (this.next == null) {
++                this.next = newOne;
++            } else {
++                Node current = this;
++                while(current.next != null) {
++                    current = current.next;
++                }
++                current.next = newOne;
++            }
++
++        }
++        Node<T> deleteNode(T d) {
++            Node<T> previous = this;
++            Node<T> current = this;
++            while (current.dData != d) {
++                if (current.next == null) {
++                    return null; // didn't find it
++                }
++                previous = current;
++                current = current.next;
++            }
++            if (current.next == null) { // last node
++                previous.next = null;
++            } else {
++                previous.next = current.next;
++            }
++            return current;
++        }
++
++        // Task 1. Remove duplicates
++        void removeDuplicates() {
++            Set<T> set = new HashSet<>();
++            Node<T> previous = null;
++            Node<T> current = this;
++            while (current != null) {
++                if (set.contains(current.dData)) {
++                    previous.next = current.next;
++                } else {
++                    set.add(current.dData);
++                    previous = current;
++                }
++                current = current.next;
++            }
++        }
++        void removeDuplicatesNoBuffer() {
++            Node<T> current = this;
++            while (current != null) {
++                Node<T> runner = current.next;
++                while (runner != null) {
++                    if (runner.dData.equals(current.dData)) {
++                        if (runner.next == null) {
++                            current.next = null;
++                        } else {
++                            current.next = runner.next;
++                            runner = runner.next;
++                        }
++                    }
++                    runner = runner.next;
++                }
++                current = current.next;
++
++            }
++        }
++
++        // Task 2
++        Node getNFromLast(int n) {
++            Node<T> first = this;
++            Node<T> last = this;
++            for(int i = 0; i < n; i++) {
++                if (last == null) {
++                    return null;
++                }
++                last = last.next;
++            }
++            while(last != null) {
++                first = first.next;
++                last = last.next;
++            }
++            return first;
++        }
++
++        // Task 3
++        Node removeMiddle(Node middle) {
++            if (middle == null || middle.next == null) {
++                return null;
++            }
++            middle.dData = middle.next.dData;
++            middle.next = middle.next.next;
++            return this;
++        }
++
++        // Task 4
++        Node<Integer> add(Node<Integer> one, Node<Integer> two, Node<Integer> result, int carry) {
++            if (carry == 1 && one == null) {
++                Node<Integer> head = result;
++                while(result.next != null) {
++                    result = result.next;
++                }
++                result.next = new Node(carry);
++                return head;
++            }
++            if (one == null || two == null) {
++                return result;
++            }
++            int sum = one.dData + two.dData + carry;
++            if (result.dData == 0) {
++                result.dData = sum % 10;
++            } else {
++                while(result.next != null) {
++                    result = result.next;
++                }
++                result.next = new Node(sum % 10);
++            }
++
++            return add(one.next, two.next, result, sum >= 10 ?  1 : 0);
++        }
++
++        // Task 5 - return first node in circular list
++        Node<T> getBeginingOfTheLoop(Node<T> node) {
++            // Find meeting point
++            Node first = node;
++            Node second = node;
++            while (second != null) {
++                first = first.next;
++                second = second.next.next;
++                if (first.dData == second.dData) {
++                    break;
++                }
++            }
++
++            // Move first node at the begining
++            first = node;
++            // They should reach each other
++            while (first != second) {
++                first = first.next;
++                second = second.next;
++            }
++            return first;
++        }
++// -------------------------------------------------------------
++    }
++
++    // Remove duplicates
++//    public static List<Integer> removeDuplicates(Node<Integer> list) {
++//        while(list.)
++//    }
++
++    public static void main(String[] args) {
++        Node<Integer> n = new Node<Integer>(1);
++        n.appendToTail(2);
++        n.appendToTail(3);
++        n.display();
++        // Task 1
++        n.appendToTail(3);
++        n.appendToTail(2);
++        n.appendToTail(4);
++        n.removeDuplicates();
++        n.display();
++
++        n.deleteNode(2);
++        n.display();
++        n.deleteNode(4);
++        n.display();
++
++        // Task 1 - no buffer
++        n.appendToTail(3);
++        n.appendToTail(2);
++        n.appendToTail(4);
++        n.removeDuplicatesNoBuffer();
++        n.display();
++
++        // Task 2
++        System.out.println(n.getNFromLast(2).dData);
++
++        // Task 3
++        System.out.println("Remove middle node");
++        n.removeMiddle(n.next).display();
++
++        // Task 4
++        Node<Integer> one = new Node<>(5);
++        one.next =  new Node<>(6);
++        Node<Integer> two = new Node<>(7);
++        two.next = new Node<>(8);
++        one.add(one, two, new Node(0), 0).display();
++
++        // Task 5
++        // a -> b -> c -> d -> e -> c
++        Node<Character> a = new Node<>('a');
++        a.next = new Node<>('b');
++        Node<Character> c = new Node<>('c');
++        a.next.next = c;
++        c.next = new Node<>('d');
++        c.next.next = new Node<>('e');
++        c.next.next.next = c;
++        System.out.println(a.getBeginingOfTheLoop(a).dData);
++
++    }
++}
+Index: src/interview/stack/ArrayFor3Stacks.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/interview/stack/ArrayFor3Stacks.java	(revision e00031cd1218b6c4d9d6b45124df6ae553fe0671)
++++ src/interview/stack/ArrayFor3Stacks.java	(revision e00031cd1218b6c4d9d6b45124df6ae553fe0671)
+@@ -0,0 +1,35 @@
++package interview.stack;
++
++public class ArrayFor3Stacks {
++    private final static int STACK_SIZE = 10;
++    private int STACKS_NUM = 3;
++    private int arr[] = new int[STACK_SIZE * 3];
++    private int[] stackPos = new int[] {0,0,0};
++
++    public void push(int stackNum, int elem) {
++        int pos = stackNum * STACK_SIZE + stackPos[stackNum] + 1;
++        stackPos[stackNum]++;
++        arr[pos] = elem;
++    }
++
++    public int pop(int stackNum) {
++        int pos = stackPos[stackNum];
++        stackPos[stackNum]--;
++        int returnValue = arr[pos + stackNum * STACK_SIZE];
++        arr[pos] = 0;
++        return returnValue;
++    }
++
++    public static void main(String[] args) {
++        ArrayFor3Stacks arr43Stacks = new ArrayFor3Stacks();
++        arr43Stacks.push(0, 1);
++        arr43Stacks.push(0, 2);
++        System.out.println(arr43Stacks.pop(0));
++        System.out.println(arr43Stacks.pop(0));
++
++        arr43Stacks.push(1, 3);
++        arr43Stacks.push(1, 4);
++        System.out.println(arr43Stacks.pop(1));
++        System.out.println(arr43Stacks.pop(1));
++    }
++}
+Index: test/algorithm/lafore/chapter2/HighArrayTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- test/algorithm/lafore/chapter2/HighArrayTest.java	(revision 7ce64bf96ddeeacf6f288b95e41e66e3c2fb488b)
++++ test/algorithm/lafore/chapter2/HighArrayTest.java	(revision e00031cd1218b6c4d9d6b45124df6ae553fe0671)
+@@ -74,5 +74,18 @@
+         arr.noDups();
+         Assert.assertEquals("11 22 33 44 ", arr.getContent());
+ 
++    }
++    @Test
++    // Programing project 2.6 - Test #3
++    public void testNoDups2() {
++        arr = new HighArray(arrSize); // create the array
++        arr.insert(11);
++        arr.insert(11);
++        arr.insert(11);
++
++        Assert.assertEquals("11 11 11 ", arr.getContent());
++        arr.noDups();
++        Assert.assertEquals("11 ", arr.getContent());
++
+     }
+ }
+Index: test/ibm/WordUtilitiesTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- test/ibm/WordUtilitiesTest.java	(revision e00031cd1218b6c4d9d6b45124df6ae553fe0671)
++++ test/ibm/WordUtilitiesTest.java	(revision e00031cd1218b6c4d9d6b45124df6ae553fe0671)
+@@ -0,0 +1,40 @@
++package ibm;
++
++import org.json.JSONException;
++import org.json.JSONObject;
++import org.junit.Assert;
++import org.junit.Before;
++import org.junit.Test;
++
++import java.io.File;
++import java.io.FileNotFoundException;
++
++public class WordUtilitiesTest {
++    private WordUtilities wordUtils;
++    private String filePath;
++
++    // Test Plan
++    // 1. Make a word File path initialization as Environmental Variable
++    // 2. Do word count test
++
++    @Before
++    public void setUp() {
++        // Initialization block
++        wordUtils = new WordUtilities();
++        filePath = System.getProperty("word.file.path");
++    }
++
++    // Positive scenario
++    @Test
++    public void testWordCounts() {
++        filePath = System.getProperty("word.file.path");
++        File file = new File(filePath);
++        try {
++            JSONObject result = wordUtils.getUniqueWordCountFrom(file);
++            Assert.assertEquals(3, result.getInt("is"));
++        } catch (FileNotFoundException | JSONException e) {
++            Assert.assertFalse(e.getMessage(), true);
++        }
++    }
++
++}

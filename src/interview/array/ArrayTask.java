@@ -33,7 +33,7 @@ public class ArrayTask {
                 charSet.add(ch);
             }
         }
-        return true;
+        return false;
     }
 
     public static boolean hasUniqueCharacters3(String str) {
@@ -266,6 +266,26 @@ public class ArrayTask {
         return rotatedMatrix;
     }
 
+    private static void showMatrixPrimaryDiagonal(int matrix[][], int n) {
+        for (int r = 0; r < n; r++) {
+            for (int c = 0; c < n; c++) {
+                if (c == r) {
+                    System.out.println(matrix[r][c]);
+                }
+            }
+        }
+    }
+
+    private static void showMatrixSecondaryDiagonal(int matrix[][], int n) {
+        for (int r = 0; r < n; r++) {
+            for (int c = 0; c < n; c++) {
+                if (c + r == (n - 1)) {
+                    System.out.println(matrix[r][c]);
+                }
+            }
+        }
+    }
+
     static void displayMatrix(int mat[][], int N) {
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++)
@@ -322,6 +342,13 @@ public class ArrayTask {
         System.out.println(replaceSpaceInString2("I am".toCharArray()));
         // Task 6
         int[][] matrix = new int[][]{{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
+
+        displayMatrix(rotateMatrix(matrix, 3), 3);
+        System.out.println("Show matrix diagonal");
+        showMatrixPrimaryDiagonal(matrix, 3);
+        System.out.println("Show matrix secondary diagonal");
+        showMatrixSecondaryDiagonal(matrix, 3);
+
         displayMatrix(rotateMatrix(matrix, 3), 3);
 
         // Task 7

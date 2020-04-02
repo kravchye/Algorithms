@@ -1,6 +1,11 @@
 package algorithm.lafore.chapter8;
 
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayDeque;
+import java.util.Queue;
 import java.util.Stack;
 
 /**
@@ -66,10 +71,134 @@ class StringTree {
         root = plusNode;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         StringTree sn = new StringTree("ABCDE");
-        sn.displayTree();
+        System.out.print("Enter first letter of decode, encode, show,"
+                + " or traverse: ");
 
+        while (true) {
+            int choice = getChar();
+            switch (choice) {
+                case 'x' : System.exit(1);
+                case 'd' : sn.displayTree(); break;
+                case 't':
+                    System.out.print("Enter type 1, 2, 3, 4 or 5: ");
+                    int value = getInt();
+                    sn.traverse(value);
+                    break;
+                default:
+                    System.out.print("Invalid entry!\n");
+
+            }
+        }
+    }
+
+    // -------------------------------------------------------------
+    public static String getString() throws IOException
+    {
+        InputStreamReader isr = new InputStreamReader(System.in);
+        BufferedReader br = new BufferedReader(isr);
+        String s = br.readLine();
+        return s;
+    }
+    // -------------------------------------------------------------
+    public static char getChar() throws IOException
+    {
+        String s = getString();
+        return s.charAt(0);
+    }
+    //-------------------------------------------------------------
+    public static int getInt() throws IOException
+    {
+        String s = getString();
+        return Integer.parseInt(s);
+    }
+
+
+    public void traverse(int traverseType)
+    {
+        switch(traverseType)
+        {
+            case 1: System.out.print("\nPreorder traversal: ");
+                preOrder(root);
+                break;
+            case 2: System.out.print("\nInorder traversal: ");
+                inOrder(root);
+                break;
+            case 3: System.out.print("\nPostorder traversal: ");
+                postOrder(root);
+                break;
+            case 4: System.out.print("\nPreorder non-recursion traversal, Depth-first: ");
+                preOrderNoRec();
+                break;
+            case 5: System.out.print("\nPreorder non-recursion traversal, Breadth-first: ");
+                preOrderBreadthFirst();
+                break;
+        }
+        System.out.println("");
+    }
+
+    private void preOrderNoRec() {
+        Stack<StringNode> stack = new Stack<>();
+        StringNode current = root;
+        stack.push(current);
+        while (! stack.isEmpty()) {
+            StringNode node = stack.pop();
+            System.out.print(node.value + " ");
+            if (node.left != null) {
+                stack.push(node.left);
+            }
+            if (node.right != null) {
+                stack.push(node.right);
+            }
+        }
+    }
+
+    private void preOrderBreadthFirst() {
+        Queue<StringNode> queue = new ArrayDeque<>();
+        queue.add(root);
+        while (! queue.isEmpty()) {
+            StringNode node = queue.poll();
+            System.out.print(node.value + " ");
+            if (node.left != null) {
+                queue.offer(node.left);
+            }
+            if (node.right != null) {
+                queue.offer(node.right);
+            }
+        }
+    }
+
+    private void preOrder(StringNode localRoot)
+    {
+        if(localRoot != null)
+        {
+            System.out.print(localRoot.value + " ");
+            preOrder(localRoot.left);
+            preOrder(localRoot.right);
+        }
+    }
+
+    private void inOrder(StringNode localRoot)
+    {
+        if(localRoot != null)
+        {
+            System.out.print("(");
+            inOrder(localRoot.left);
+            System.out.print(localRoot.value + " ");
+            inOrder(localRoot.right);
+            System.out.print(")");
+        }
+    }
+
+    private void postOrder(StringNode localRoot)
+    {
+        if(localRoot != null)
+        {
+            postOrder(localRoot.left);
+            postOrder(localRoot.right);
+            System.out.print(localRoot.value + " ");
+        }
     }
 
     public void displayTree()

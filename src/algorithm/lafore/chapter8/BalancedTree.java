@@ -17,28 +17,23 @@ public class BalancedTree extends StringTree {
 
         //Parse the input string into an array of single-letter trees
         StringNode[] nodeArray = new StringNode[initString.length()];
-        for(int i = 0; i < initString.length(); i++)
-        {
+        for (int i = 0; i < initString.length(); i++) {
             nodeArray[i] = new StringNode(initString.charAt(i));
             nElems++;
         }
 
         //Keep combining nodes into trees until there is only one left
-        while(nElems > 1)
-        {
+        while (nElems > 1) {
             int fillCounter = 0;
-            for(int j = 0; j < nElems; j++)
-            {
-                if(j%2 == 1)
-                {
+            for (int j=0; j < nElems; j++) {
+                if (j % 2 == 1) {
                     StringNode tempNode = new StringNode('+');
                     tempNode.left = nodeArray[j-1];
                     tempNode.right = nodeArray[j];
                     nodeArray[fillCounter] = tempNode;
                     fillCounter++;
                 }
-                if(j%2 == 0 && j == nElems-1) //if there's a leftover node
-                {
+                if (j % 2 == 0 && j == nElems - 1) {
                     nodeArray[fillCounter] = nodeArray[j];
                 }
             }

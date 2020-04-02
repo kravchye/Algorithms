@@ -111,14 +111,33 @@ public class CrackingInterviewQuestions {
         }
 
         // Task 3
-        Node removeMiddle(Node middle) {
-            if (middle == null || middle.next == null) {
-                return null;
+        Node removeMiddle(Node head) {
+            if (head == null || head.next == null || head.next.next == null) {
+                return head;
             }
-            middle.dData = middle.next.dData;
-            middle.next = middle.next.next;
-            return this;
+            Node slowPointer = head;
+            Node fastPointer = head;
+            Node previous = null;
+            // get to the middle by moving fast pointer
+            while(fastPointer != null && fastPointer.next != null) {
+                fastPointer = fastPointer.next.next;
+                previous = slowPointer;
+                slowPointer = slowPointer.next;
+            }
+            // remove the middle one
+            previous.next = slowPointer.next;
+            return head;
+
         }
+// Disagree with the next solution
+//        Node removeMiddle(Node middle) {
+//            if (middle == null || middle.next == null) {
+//                return null;
+//            }
+//            middle.dData = middle.next.dData;
+//            middle.next = middle.next.next;
+//            return this;
+//        }
 
         // Task 4
         Node<Integer> add(Node<Integer> one, Node<Integer> two, Node<Integer> result, int carry) {
@@ -205,7 +224,7 @@ public class CrackingInterviewQuestions {
 
         // Task 3
         System.out.println("Remove middle node");
-        n.removeMiddle(n.next).display();
+        n.removeMiddle(n).display();
 
         // Task 4
         Node<Integer> one = new Node<>(5);
